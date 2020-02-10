@@ -1,0 +1,8 @@
+<p [ngClass]="getClass()">{{ dataReceived.text }}</p>
+
+<p *ngIf="dataReceived.hiddenInfo === 'b'">This info can be hidden</p>
+
+<p *ngFor="let data of dataReceived.iterableData">{{ data }}</p>
+
+<button (click)="returnInfoToParent()">Return info</button>
+

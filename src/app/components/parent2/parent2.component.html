@@ -1,0 +1,9 @@
+<button (click)="redAction()">RED</button><button (click)="blueAction()">BLUE</button>
+
+<div>
+    <app-child2 [dataReceived]="data" (emitterChild)="receiveDataFromChild($event)"></app-child2>
+</div>
+
+<p>
+    {{ labelReceived }}
+</p>
