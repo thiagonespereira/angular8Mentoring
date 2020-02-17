@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { InfoService } from 'src/app/services/info.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-parent2',
   templateUrl: './parent2.component.html',
   styleUrls: ['./parent2.component.scss']
 })
-export class Parent2Component implements OnInit {
+export class Parent2Component implements OnInit, OnDestroy {
 
   public data = {};
 
   public labelReceived: string;
+  public responseLabel: string;
+  private sub: Subscription;
 
-  constructor() { }
+  constructor(private infoService: InfoService) { }
 
   ngOnInit(): void {
+    this.responseLabel = "No response yet."
     this.data = {
       class: '',
       text: 'Just created the component.',
@@ -48,6 +53,25 @@ export class Parent2Component implements OnInit {
 
   receiveDataFromChild(event) {
     this.labelReceived = event;
+  }
+
+  get() {
+    this.sub = this.infoService.getInfo()
+    .subscribe(data => {
+      this.responseLabel = data;
+    })
+  }
+
+  post() {
+    this.infoService.postInfo()
+    .toPromise()
+    .then((data) => {
+      this.responseLabel = data;
+    })
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }
