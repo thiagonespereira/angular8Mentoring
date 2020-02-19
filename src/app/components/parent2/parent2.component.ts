@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InfoService } from 'src/app/services/info.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-parent2',
@@ -15,7 +16,7 @@ export class Parent2Component implements OnInit, OnDestroy {
   public responseLabel: string;
   private sub: Subscription;
 
-  constructor(private infoService: InfoService) { }
+  constructor(private infoService: InfoService, private router: Router) { }
 
   ngOnInit(): void {
     this.responseLabel = "No response yet."
@@ -72,6 +73,10 @@ export class Parent2Component implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  goToPage1() {
+    this.router.navigate(['/page1'])
   }
 
 }
